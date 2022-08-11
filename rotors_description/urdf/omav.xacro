@@ -51,8 +51,8 @@
     <xacro:property name="velocity_revolute" value="0.5"/>
     <xacro:property name="tilt_input_scaling" value="31.4159" />
 
-    <xacro:property name="sin30" value="0.5"/>
-    <xacro:property name="cos30" value="0.866025403784"/>
+    <xacro:property name="sin45" value="0.7071067811865476"/>
+    <xacro:property name="cos45" value="0.7071067811865476"/>
     <xacro:property name="rotor_drag_coefficient" value="${8.06428e-05}"/>
     <xacro:property name="rolling_moment_coefficient" value="0.000001"/>
 
@@ -91,8 +91,9 @@
     </xacro:overactuated_base_macro>
 
   <!-- Instantiate rotors -->
-  <xacro:double_tilt_unit robot_namespace="${namespace}"
-    suffix="right"
+  <xacro:double_tilt_unit
+    robot_namespace="${namespace}"
+    suffix="front_left"
     direction_upper="ccw"
     direction_lower="cw"
     motor_constant="${motor_constant}"
@@ -111,60 +112,8 @@
     rolling_moment_coefficient="${rolling_moment_coefficient}"
     mesh="propeller"
     mesh_tilt_unit="${mesh_file_tilt_unit}"
-    color="Black">
-    <origin xyz="0 -${arm_length} 0" rpy="0 0 4.71238898038"/>
-    <xacro:insert_block name="rotor_inertia" />
-  </xacro:double_tilt_unit>
-
-  <xacro:double_tilt_unit
-    robot_namespace="${namespace}"
-    suffix="left"
-    direction_upper="cw"
-    direction_lower="ccw"
-    motor_constant="${motor_constant}"
-    motor_constant_lower="${motor_constant_lower}"
-    moment_constant="${moment_constant}"
-    moment_constant_lower="${moment_constant_lower}"
-    parent="${namespace}/base_link"
-    mass_rotor="${mass_rotor}"
-    mass_tilt_unit="${mass_tilt_unit}"
-    time_constant_up="${time_constant_up}"
-    time_constant_down="${time_constant_down}"
-    max_rot_velocity="${max_rot_velocity}"
-    rotor_offset_top="${rotor_offset_top}"
-    motor_number="1"
-    rotor_drag_coefficient="${rotor_drag_coefficient}"
-    rolling_moment_coefficient="${rolling_moment_coefficient}"
-    mesh="propeller"
-    mesh_tilt_unit="${mesh_file_tilt_unit}"
-    color="Black">
-    <origin xyz="0 ${arm_length} 0" rpy="0 0 1.57079632679"/>
-    <xacro:insert_block name="rotor_inertia" />
-  </xacro:double_tilt_unit>
-
-  <xacro:double_tilt_unit
-    robot_namespace="${namespace}"
-    suffix="front_left"
-    direction_upper="ccw"
-    direction_lower="cw"
-    motor_constant="${motor_constant}"
-    motor_constant_lower="${motor_constant_lower}"
-    moment_constant="${moment_constant}"
-    moment_constant_lower="${moment_constant_lower}"
-    parent="${namespace}/base_link"
-    mass_rotor="${mass_rotor}"
-    mass_tilt_unit="${mass_tilt_unit}"
-    time_constant_up="${time_constant_up}"
-    time_constant_down="${time_constant_down}"
-    max_rot_velocity="${max_rot_velocity}"
-    rotor_offset_top="${rotor_offset_top}"
-    motor_number="2"
-    rotor_drag_coefficient="${rotor_drag_coefficient}"
-    rolling_moment_coefficient="${rolling_moment_coefficient}"
-    mesh="propeller"
-    mesh_tilt_unit="${mesh_file_tilt_unit}"
     color="Orange">
-    <origin xyz="${cos30*arm_length} ${sin30*arm_length} 0" rpy="0 0 0.52359877559"/>
+    <origin xyz="${cos45*arm_length} ${sin45*arm_length} 0" rpy="0 0 0.52359877559"/>
     <xacro:insert_block name="rotor_inertia" />
   </xacro:double_tilt_unit>
 
@@ -183,13 +132,13 @@
     time_constant_down="${time_constant_down}"
     max_rot_velocity="${max_rot_velocity}"
     rotor_offset_top="${rotor_offset_top}"
-    motor_number="3"
+    motor_number="1"
     rotor_drag_coefficient="${rotor_drag_coefficient}"
     rolling_moment_coefficient="${rolling_moment_coefficient}"
     mesh="propeller"
     mesh_tilt_unit="${mesh_file_tilt_unit}"
     color="DarkGrey">
-    <origin xyz="-${cos30*arm_length} -${sin30*arm_length} 0" rpy="0 0 3.66519142919"/>
+    <origin xyz="-${cos45*arm_length} -${sin45*arm_length} 0" rpy="0 0 3.66519142919"/>
     <xacro:insert_block name="rotor_inertia" />
   </xacro:double_tilt_unit>
 
@@ -208,13 +157,13 @@
     time_constant_down="${time_constant_down}"
     max_rot_velocity="${max_rot_velocity}"
     rotor_offset_top="${rotor_offset_top}"
-    motor_number="4"
+    motor_number="2"
     rotor_drag_coefficient="${rotor_drag_coefficient}"
     rolling_moment_coefficient="${rolling_moment_coefficient}"
     mesh="propeller"
     mesh_tilt_unit="${mesh_file_tilt_unit}"
     color="Orange">
-    <origin xyz="${cos30*arm_length} -${sin30*arm_length} 0" rpy="0 0 5.75958653158"/>
+    <origin xyz="${cos45*arm_length} -${sin45*arm_length} 0" rpy="0 0 5.75958653158"/>
     <xacro:insert_block name="rotor_inertia" />
   </xacro:double_tilt_unit>
 
@@ -233,190 +182,14 @@
     time_constant_down="${time_constant_down}"
     max_rot_velocity="${max_rot_velocity}"
     rotor_offset_top="${rotor_offset_top}"
-    motor_number="5"
+    motor_number="3"
     rotor_drag_coefficient="${rotor_drag_coefficient}"
     rolling_moment_coefficient="${rolling_moment_coefficient}"
     mesh="propeller"
     mesh_tilt_unit="${mesh_file_tilt_unit}"
     color="DarkGrey">
-    <origin xyz="-${cos30*arm_length} ${sin30*arm_length} 0" rpy="0 0 2.61799387799"/>
+    <origin xyz="-${cos45*arm_length} ${sin45*arm_length} 0" rpy="0 0 2.61799387799"/>
     <xacro:insert_block name="rotor_inertia" />
   </xacro:double_tilt_unit>
-
-  <gazebo>
-    <plugin name="mavlink_interface" filename="librotors_gazebo_mavlink_interface.so">
-      <robotNamespace>${namespace}</robotNamespace>
-      <imu_rate>102</imu_rate>
-      <imuSubTopic>/imu</imuSubTopic>
-      <mavlink_addr>INADDR_ANY</mavlink_addr>
-      <mavlink_udp_port>14560</mavlink_udp_port>
-      <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
-
-      <control_channels>
-
-        <channel name="rotor0">
-          <input_index>0</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor1">
-          <input_index>1</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor2">
-          <input_index>2</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor3">
-          <input_index>3</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor4">
-          <input_index>4</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor5">
-          <input_index>5</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-         <channel name="rotor6">
-          <input_index>6</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor7">
-          <input_index>7</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor8">
-          <input_index>8</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor9">
-          <input_index>9</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor10">
-          <input_index>10</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="rotor11">
-          <input_index>11</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${max_rot_velocity}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-        </channel>
-
-        <channel name="tilt_unit0">
-          <input_index>12</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${tilt_input_scaling}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position</joint_control_type>
-        </channel>
-
-        <channel name="tilt_unit1">
-          <input_index>13</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${tilt_input_scaling}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position</joint_control_type>
-        </channel>
-
-        <channel name="tilt_unit2">
-          <input_index>14</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${tilt_input_scaling}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position</joint_control_type>
-        </channel>
-
-        <channel name="tilt_unit3">
-          <input_index>15</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${tilt_input_scaling}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position</joint_control_type>
-        </channel>
-
-        <channel name="tilt_unit4">
-          <input_index>16</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${tilt_input_scaling}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position</joint_control_type>
-        </channel>
-
-        <channel name="tilt_unit5">
-          <input_index>17</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>${tilt_input_scaling}</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position</joint_control_type>
-        </channel>
-      </control_channels>
-    </plugin>
-  </gazebo>
-
+  
 </robot>

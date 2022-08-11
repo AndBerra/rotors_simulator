@@ -12,7 +12,7 @@
   <arg name="tool_ref_frame_name" default="$(arg mav_name)/tool_nominal"/>
 
   <!-- Vehicle params -->
-  <arg name="model" default="$(find rotors_description)/urdf/omav3_base.xacro"/>
+  <arg name="model" default="$(find rotors_description)/urdf/$(arg mav_name)_base.xacro"/>
   <arg name="enable_logging" default="false"/>
   <arg name="enable_ground_truth" default="true"/>
   <arg name="log_file" default="$(arg mav_name)"/>
@@ -23,7 +23,7 @@
   <!-- LEE J309 room center -->
   <arg name="spawn_x" default="0.4"/>
   <arg name="spawn_y" default="0.025"/>
-  <arg name="spawn_z" default="0.3"/>
+  <arg name="spawn_z" default="0.17"/>
 
   <!-- ******************************* -->
   <!-- ****** Gazebo Simulation ****** -->
