@@ -12,7 +12,7 @@
   <arg name="tool_ref_frame_name" default="$(arg mav_name)/tool_nominal"/>
 
   <!-- Vehicle params -->
-  <arg name="model" default="$(find rotors_description)/urdf/$(arg mav_name)_base.xacro"/>
+  <arg name="model" default="$(find rotors_description)/urdf/omav_base.xacro"/>
   <arg name="enable_logging" default="false"/>
   <arg name="enable_ground_truth" default="true"/>
   <arg name="log_file" default="$(arg mav_name)"/>
